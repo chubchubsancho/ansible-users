@@ -1,0 +1,27 @@
+---
+- name: clean old users
+  include_tasks: cleanup.yaml
+  tags:
+    - users
+    - cleanup
+    - configuration
+
+- name: create groups
+  include_tasks: group.yaml
+  tags:
+    - users
+    - groups
+    - configuration
+
+- name: create users
+  include_tasks: user.yaml
+  tags:
+    - users
+    - configuration
+
+- name: manage users authorized keys
+  include_tasks: ssh.yaml
+  tags:
+    - users
+    - ssh
+    - configuration

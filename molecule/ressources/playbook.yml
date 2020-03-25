@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "configure users and groups"
+      import_role:
+        name: ansible-users

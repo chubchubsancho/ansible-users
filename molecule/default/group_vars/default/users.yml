@@ -1,0 +1,15 @@
+---
+environment_users:
+  - username: foo
+    name: Foo Barrington
+    groups: ["foobar"]
+    uid: 1001
+    home: /home/foo
+    ssh_key:
+      - "ssh-rsa AAAAA.... foo@machine"
+      - "ssh-rsa AAAAB.... foo2@machine"
+
+environment_groups_to_create:
+  - name: foobar
+    gid: 10001
+    sudoers: false

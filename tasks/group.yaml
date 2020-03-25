@@ -1,0 +1,41 @@
+---
+- name: "create groups"
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+  with_items:
+    - "{{ groups_to_create }}"
+    - "{{ environment_groups_to_create }}"
+    - "{{ host_groups_to_create }}"
+  tags:
+    - users
+    - groups
+    - configuration
+
+- name: "give groups sudoer right"
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: "%{{ item.name }} ALL=(ALL) NOPASSWD: ALL"
+  when: item.sudoers
+  with_items:
+    - "{{ groups_to_create }}"
+    - "{{ environment_groups_to_create }}"
+    - "{{ host_groups_to_create }}"
+  tags:
+    - users
+    - groups
+    - configuration
+
+- name: "create one unique group per user"
+  group:
+    name: "{{ item.username }}"
+    gid: "{{ item.gid if item.gid is defined else item.uid }}"
+  with_items:
+    - "{{ users }}"
+    - "{{ environment_users }}"
+    - "{{ host_users }}"
+  when: "'group' not in item and users_create_per_user_group"
+  tags:
+    - users
+    - configuration

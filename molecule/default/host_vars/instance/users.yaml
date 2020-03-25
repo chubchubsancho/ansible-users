@@ -1,0 +1,15 @@
+---
+host_users:
+  - username: bar
+    name: Bar Foo
+    groups: ["barfoo"]
+    uid: 1002
+    home: /home/bar
+    ssh_key:
+      - "ssh-rsa AAAAA.... foo@machine"
+      - "ssh-rsa AAAAB.... foo2@machine"
+
+host_groups_to_create:
+  - name: barfoo
+    gid: 10002
+    sudoers: true

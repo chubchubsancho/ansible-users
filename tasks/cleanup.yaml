@@ -1,0 +1,25 @@
+---
+- name: "delete user(s) account as requested"
+  user:
+    name: "{{ item.username }}"
+    state: absent
+  with_items:
+    - "{{ users_deleted }}"
+  tags:
+    - users
+    - cleanup
+    - configuration
+
+- name: "delete dedicated group as requested"
+  group:
+    name: "{{ item.username }}"
+    state: absent
+  with_items:
+    - "{{ users_deleted }}"
+    - "{{ environment_users_deleted }}"
+    - "{{ host_users_deleted }}"
+  when: users_create_per_user_group
+  tags:
+    - users
+    - cleanup
+    - configuration

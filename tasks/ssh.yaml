@@ -1,0 +1,42 @@
+---
+- name: "add ssh keys for users"
+  authorized_key:
+    user: "{{ item.0.username }}"
+    key: "{{ item.1 }}"
+    path: "{{ item.0.home | default('/home/' + item.0.username) }}/.ssh/authorized_keys"
+  with_subelements:
+    - "{{ users }}"
+    - ssh_key
+    - skip_missing: true
+  tags:
+    - users
+    - ssh
+    - configuration
+
+- name: "add ssh keys for environment users"
+  authorized_key:
+    user: "{{ item.0.username }}"
+    key: "{{ item.1 }}"
+    path: "{{ item.0.home | default('/home/' + item.0.username) }}/.ssh/authorized_keys"
+  with_subelements:
+    - "{{ environment_users }}"
+    - ssh_key
+    - skip_missing: true
+  tags:
+    - users
+    - ssh
+    - configuration
+
+- name: "add ssh keys for host users"
+  authorized_key:
+    user: "{{ item.0.username }}"
+    key: "{{ item.1 }}"
+    path: "{{ item.0.home | default('/home/' + item.0.username) }}/.ssh/authorized_keys"
+  with_subelements:
+    - "{{ host_users }}"
+    - ssh_key
+    - skip_missing: true
+  tags:
+    - users
+    - ssh
+    - configuration

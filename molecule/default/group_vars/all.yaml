@@ -1,0 +1,15 @@
+---
+users:
+  - username: admin
+    name: Admin
+    groups: ["developers"]
+    uid: 1000
+    home: /home/admin
+    ssh_key:
+      - "ssh-rsa AAAAA.... foo@machine"
+      - "ssh-rsa AAAAB.... foo2@machine"
+
+groups_to_create:
+  - name: developers
+    gid: 10000
+    sudoers: true
