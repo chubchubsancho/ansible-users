@@ -19,10 +19,8 @@ env:
   - image=ubuntu version=19.10
   - image=ubuntu version=20.04
 
-matrix:
-  fast_finish: true
-
 jobs:
+  fast_finish: true
   include:
     - stage: linter
       env: image=debian verion=9
