@@ -19,8 +19,10 @@ env:
   - image=ubuntu version=19.10
   - image=ubuntu version=20.04
 
-jobs:
+matrix:
   fast_finish: true
+
+jobs:
   include:
     - stage: linter
       env: image=debian verion=9
@@ -36,7 +38,8 @@ jobs:
 script:
   - >
     travis_wait 20 sleep infinity & docker run --rm -it --env image=$image
-    --env version=$version --mount type=bind,source="$(pwd)",target=/tmp/$(basename "$PWD")
+    --env version=$version 
+    --mount type=bind,source="$(pwd)",target=/tmp/$(basename "$PWD")
     -v /var/run/docker.sock:/var/run/docker.sock
     -w /tmp/$(basename "$PWD")
     quay.io/ansible/molecule:3.0.2
