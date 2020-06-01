@@ -14,7 +14,7 @@
 
 - name: "give groups sudoer right"
   lineinfile:
-    path: /etc/sudoers
+    path: "/etc/sudoers.d/{{ item.name }}"
     state: present
     line: "%{{ item.name }} ALL=(ALL) NOPASSWD: ALL"
   when: item.sudoers
