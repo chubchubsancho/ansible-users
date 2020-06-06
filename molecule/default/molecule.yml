@@ -6,7 +6,6 @@ driver:
   name: docker
 
 lint: |
-  set -e
   yamllint .
   ansible-lint
   flake8
