@@ -1,5 +1,5 @@
 ---
-sudo: required
+dist: bionic
 language: python
 services:
   - docker
@@ -19,7 +19,7 @@ jobs:
           --mount type=bind,source="$(pwd)",target=/tmp/$(basename "$PWD")
           -v /var/run/docker.sock:/var/run/docker.sock
           -w /tmp/$(basename "$PWD")
-          quay.io/ansible/molecule:3.0.2
+          quay.io/ansible/molecule
           molecule lint
 
     - stage: build
@@ -36,11 +36,11 @@ jobs:
       script:
         - >
           travis_wait 20 sleep infinity & docker run --rm -it --env image=$image
-          --env version=$version 
+          --env version=$version
           --mount type=bind,source="$(pwd)",target=/tmp/$(basename "$PWD")
           -v /var/run/docker.sock:/var/run/docker.sock
           -w /tmp/$(basename "$PWD")
-          quay.io/ansible/molecule:3.0.2
+          quay.io/ansible/molecule
           molecule test
 
 notifications:
